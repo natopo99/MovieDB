@@ -4,8 +4,10 @@
 @model MovieDB.Models.MovieResponse
 
 <h1>@ViewData["Title"]</h1>
+@* Post method sends the form to the desired classes and works with [httpPost] *@
 
 <form method="post">
+   
     <label asp-for="Category">Category:</label>
     <input asp-for="Category" />
     <br /><br />
@@ -27,7 +29,7 @@
     </select>
     <br /><br />
     <label asp-for="Edited">Edited:</label>
-    <select asp-for="Edited" >
+    <select asp-for="Edited">
         <option value="true">True</option>
         <option value="false">False</option>
     </select>
@@ -42,4 +44,4 @@
     <button type="submit">Submit New Movie</button>
 </form>
 
-<p>Use this page to detail your site's privacy policy.</p>
+
