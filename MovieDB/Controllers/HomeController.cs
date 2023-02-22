@@ -62,7 +62,7 @@ namespace MovieDB.Controllers
             return View(responses);
         }
         [HttpGet]
-
+        // we pas in the movie ID so the program knows which movie to edit
         public IActionResult Edit(int movieid)
         {
             ViewBag.Categories = DBContext.Categories.ToList();
@@ -90,7 +90,7 @@ namespace MovieDB.Controllers
         }
 
         
-        
+        // we pass in the movie response so the program can have access to the data 
         [HttpPost]
         public IActionResult Delete(MovieResponse mr)
         {
