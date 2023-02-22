@@ -82,7 +82,7 @@ namespace MovieDB.Controllers
 
         // Both the edit and delete models need a get and post request
         [HttpGet]
-        public IActionResult Delete(int movieid)
+        public IActionResult Trash(int movieid)
         {
             var movie = DBContext.responses.Single(x => x.MovieId == movieid);
 
@@ -92,7 +92,7 @@ namespace MovieDB.Controllers
         
         // we pass in the movie response so the program can have access to the data 
         [HttpPost]
-        public IActionResult Delete(MovieResponse mr)
+        public IActionResult Trash(MovieResponse mr) //needed to change it to trash instead of delete
         {
             DBContext.responses.Remove(mr);
             DBContext.SaveChanges();
