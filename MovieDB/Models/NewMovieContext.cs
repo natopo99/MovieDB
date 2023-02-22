@@ -20,7 +20,7 @@ namespace MovieDB.Models
         protected override void OnModelCreating(ModelBuilder mb)
         {
             mb.Entity<Category>().HasData(
-
+                // Adding new options to the dropdown menu and giving Id's to pass to Views
                 new Category { CategoryID=1, CategoryName= "Action/Adventure" },
                 new Category { CategoryID = 2, CategoryName = "Comedy" },
                 new Category { CategoryID = 3, CategoryName = "Drama" },

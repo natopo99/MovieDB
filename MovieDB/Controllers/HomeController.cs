@@ -80,7 +80,7 @@ namespace MovieDB.Controllers
             return RedirectToAction("MovieCollection");
         }
 
-
+        // Both the edit and delete models need a get and post request
         [HttpGet]
         public IActionResult Delete(int movieid)
         {
