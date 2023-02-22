@@ -7,9 +7,19 @@
 @* Post method sends the form to the desired classes and works with [httpPost] *@
 
 <form method="post">
-   
-    <label asp-for="Category">Category:</label>
-    <input asp-for="Category" />
+    <div asp-validation-summary="All"></div>
+
+
+    <label asp-for="CategoryID">Category:</label>
+    <select asp-for="CategoryID">
+        <option value="e">Select a Category</option>
+        @foreach (Category c in ViewBag.Categories)
+        {
+            <option value="@c.CategoryID">@c.CategoryName</option>
+
+        }
+
+    </select>
     <br /><br />
     <label asp-for="Title">Title:</label>
     <input asp-for="Title" />

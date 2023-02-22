@@ -12,8 +12,8 @@ namespace MovieDB.Models
         [Required] //add the required to the fields that need to be submitted to database every time
         public int MovieId { get; set; }
         [Required]
-        public string Category { get; set; }
-        [Required]
+
+
         public string Title { get; set; }
         [Required] //
         public int Year { get; set; }
@@ -26,6 +26,12 @@ namespace MovieDB.Models
         public string LentTo { get; set; }
         [StringLength(25, ErrorMessage = "The field must be less than 25 characters")]
         public string Notes { get; set; }
+        [Required]
+
+        //build foreign key relationship
+        public int CategoryID { get; set; }
+
+        public Category Category { get; set; }
 
     }
 }

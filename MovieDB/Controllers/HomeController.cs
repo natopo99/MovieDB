@@ -6,17 +6,18 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace MovieDB.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+
         private NewMovieContext DBContext { get; set; }
 
-        public HomeController(ILogger<HomeController> logger, NewMovieContext name)
+        public HomeController(NewMovieContext name)
         {
-            _logger = logger;
+
             DBContext = name;
         }
 
@@ -33,20 +34,71 @@ namespace MovieDB.Controllers
 
         public IActionResult NewMovies()
         {
+            ViewBag.Categories = DBContext.Categories.ToList();
             return View();
         }
         [HttpPost]
         public IActionResult NewMovies(MovieResponse mr)
         {
-            DBContext.Add(mr);
-            DBContext.SaveChanges();
-            return View("Submitted", mr);
+            if (ModelState.IsValid)
+            {
+                DBContext.Add(mr);
+                DBContext.SaveChanges();
+                return View("Submitted", mr);
+            }
+            else
+            {
+                ViewBag.Categories = DBContext.Categories.ToList();
+                return View(mr);
+            }
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public IActionResult MovieCollection()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+             var responses = DBContext.responses
+                .Include(x => x.Category)
+                .ToList();
+
+            return View(responses);
         }
+        [HttpGet]
+
+        public IActionResult Edit(int movieid)
+        {
+            ViewBag.Categories = DBContext.Categories.ToList();
+
+            var movie = DBContext.responses.Single(x => x.MovieId == movieid);
+
+            return View("NewMovies", movie);
+        }
+        [HttpPost]
+        public IActionResult Edit(MovieResponse mr)
+        {
+            DBContext.Update(mr);
+            DBContext.SaveChanges();
+
+            return RedirectToAction("MovieCollection");
+        }
+
+
+        [HttpGet]
+        public IActionResult Delete(int movieid)
+        {
+            var movie = DBContext.responses.Single(x => x.MovieId == movieid);
+
+            return View(movie);
+        }
+
+        
+        
+        [HttpPost]
+        public IActionResult Delete(MovieResponse mr)
+        {
+            DBContext.responses.Remove(mr);
+            DBContext.SaveChanges();
+
+            return RedirectToAction("MovieCollection");
+        }
+
     }
 }
