@@ -76,6 +76,7 @@ namespace MovieDB.Controllers
         {
             DBContext.Update(mr);
             DBContext.SaveChanges();
+            DBContext.SaveChanges();
 
             return RedirectToAction("MovieCollection");
         }
